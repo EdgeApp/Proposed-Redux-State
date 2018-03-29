@@ -16,7 +16,7 @@
 13. [Device](#Device)
 14. [Exchange](#Exchange)
 15. [Send](#Send)
-16. [Request](#Request)
+16. [Request](#request)
 
 ### Helper Types
 ```javascript
@@ -348,7 +348,7 @@ export type SendState = {
 }
 ```
 
-### Request
+### <a name="request"></a>Request
 ```javascript
 export type RequestInfo = {
   walletId: Id, // possibly keto-derived
