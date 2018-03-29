@@ -1,15 +1,16 @@
 # Proposed Redux State
 
 ## Table of Contents
-1. [Helper Types](#helper-types)
-2. [Root State](#root-state)
-3. [Edge](#edge)
-4. [Account](#account)
-5. [Wallet Settings](#wallet-settings)
-6. [Currency Settings](#currency-settings)
-7. [Local Settings](#local-settings)
-8. [Synced Settings](#synced-settings)
-9. [Settings](#settings)
+
+1.  [Helper Types](#helper-types)
+2.  [Root State](#root-state)
+3.  [Edge](#edge)
+4.  [Account](#account)
+5.  [Wallet Settings](#wallet-settings)
+6.  [Currency Settings](#currency-settings)
+7.  [Local Settings](#local-settings)
+8.  [Synced Settings](#synced-settings)
+9.  [Settings](#settings)
 10. [Wallets](#wallets)
 11. [Scenes](#scenes)
 12. [Device](#device)
@@ -18,6 +19,7 @@
 15. [Request](#request)
 
 ### <a name="helper-types"></a>Helper Types
+
 ```typescript
 type WalletId = string
 type CurrencyCode = string
@@ -27,9 +29,9 @@ type DisplayAmount = string
 type ExchangeAmount = string
 type FiatAmount = string
 type GuiAmount = {
-  native: NativeAmount,
-  display: DisplayAmount,
-  exchange: ExchangeAmount,
+  native: NativeAmount
+  display: DisplayAmount
+  exchange: ExchangeAmount
   fiat: (CurrencyConverter, IsoCurrencyCode) => FiatAmount // ??? keto-derived?
 }
 type FeesSettings = Object
@@ -39,30 +41,34 @@ type SceneState = Object
 ```
 
 ### <a name="root-state"></a>Root State
+
 ```typescript
 export type State = {
-  edge: EdgeState, // everything non-serializable
-  account: AccountState,
-  wallets: WalletsState,
-  settings: SettingsState,
-  scenes: ScenesState,
-  device: DeviceState,
-  exchange: ExchangeState,
-  send: SendState,
+  edge: EdgeState // everything non-serializable
+  account: AccountState
+  wallets: WalletsState
+  settings: SettingsState
+  scenes: ScenesState
+  device: DeviceState
+  exchange: ExchangeState
+  send: SendState
   request: RequestState
 }
 ```
 
 ### <a name="edge"></a>Edge
+
 ```typescript
-export type EdgeState = { // everything non-serializable
-  account: EdgeAccount | null,
-  context: EdgeContext | null,
+export type EdgeState = {
+  // everything non-serializable
+  account: EdgeAccount | null
+  context: EdgeContext | null
   wallets: {[WalletId]: EdgeCurrencyWallet} // keto-derived from account?
 }
 ```
 
 ### <a name="account"></a>Account
+
 ```typescript
 export type LoginTypeState = ‘newAccount’
   | ‘password’
@@ -88,10 +94,12 @@ export type PasswordReminderState = {
 ```
 
 ### <a name="wallet-settings"></a>Wallet Settings
+
 ```typescript
 export type WalletSettingsState = {
   [WalletId]: {
-    privacyMode: { // used to show or hide wallet balance in fiat
+    privacyMode: {
+      // used to show or hide wallet balance in fiat
       isEnabled: boolean
     }
   }
@@ -99,20 +107,21 @@ export type WalletSettingsState = {
 ```
 
 ### <a name="currency-settings"></a>Currency Settings
+
 ```typescript
 export type CurrencySettingsState = {
   [CurrencyCode]: {
-    denominations: {[key: string]: EdgeDenomination},
-    displayDenominationKey: string, // overkill? confusing?
-    displayDenomination: EdgeDenomination, // keto-derived
-    exchangeDenomination: EdgeDenomination, // keto-derived
+    denominations: {[key: string]: EdgeDenomination}
+    displayDenominationKey: string // overkill? confusing?
+    displayDenomination: EdgeDenomination // keto-derived
+    exchangeDenomination: EdgeDenomination // keto-derived
     spendingLimits: {
       daily: {
-        isEnabled: boolean,
+        isEnabled: boolean
         nativeAmount: string
-      },
+      }
       transaction: {
-        isEnabled: boolean,
+        isEnabled: boolean
         nativeAmount: string
       }
     }
@@ -121,45 +130,49 @@ export type CurrencySettingsState = {
 ```
 
 ### <a name="local-settings"></a>Local Settings
+
 ```typescript
 export type LocalSettingsState = {
   bluetoothMode: {
-    isEnabled: boolean,
-    isSupported: boolean,
-  },
+    isEnabled: boolean
+    isSupported: boolean
+  }
   otpMode: {
-    isEnabled: boolean,
-    key: string,
-    resetDate: Date,
+    isEnabled: boolean
+    key: string
+    resetDate: Date
     daysRemaining: Date
-  },
+  }
   touchId: {
-    isEnabled: boolean,
+    isEnabled: boolean
     isSupported: boolean
   }
 }
 ```
 
 ### <a name="synced-settings"></a>Synced Settings
+
 ```typescript
 export type SyncedSettingsState = {
   autoLogoutMode: {
-    isEnabled: boolean,
+    isEnabled: boolean
     seconds: number
-  },
-  defaultFiat: IsoCurrencyCode,
+  }
+  defaultFiat: IsoCurrencyCode
   merchantMode: {
     isEnabled: boolean
-  },
-  privacyMode: { // used to show or hide total account balance in fiat
-    isEnabled: boolean,
-  },
-  byWalletId: WalletSettingsState,
+  }
+  privacyMode: {
+    // used to show or hide total account balance in fiat
+    isEnabled: boolean
+  }
+  byWalletId: WalletSettingsState
   byCurrencyCode: CurrencySettingsState
 }
 ```
 
 ### <a name="settings"></a>Settings
+
 ```typescript
 export type SettingsState = {
   autoLogoutMode: SyncedSettingsState.autoLogoutMode, // keto-derived
@@ -177,11 +190,12 @@ export type SettingsState = {
 ```
 
 ### <a name="wallets"></a>Wallets
+
 ```typescript
 export type WalletsState = {
-  byId: {[WalletId]: GuiWallet},
-  activeWalletIds: Array<WalletId>,
-  archivedWalletIds: Array<WalletId>,
+  byId: {[WalletId]: GuiWallet}
+  activeWalletIds: Array<WalletId>
+  archivedWalletIds: Array<WalletId>
   selectedWalletId: WalletId
   selectedCurrencyCode: CurrencyCode
   selectedWallet: GuiWallet // derived from byId[selectedWalletId]
@@ -189,42 +203,52 @@ export type WalletsState = {
 ```
 
 ### <a name="scenes"></a>Scenes
+
 ```typescript
-export type ScenesState = { // INCOMPLETE, JUST AN EXAMPLE
-  [SceneKey]: SceneState,
+export type ScenesState = {
+  // INCOMPLETE, JUST AN EXAMPLE
+  [SceneKey]: SceneState
   main: {
-    dropdownAlert: { // displays globally
+    dropdownAlert: {
+      // displays globally
       isVisible: boolean
-    },
-    popupModal: { // displays globally
+    }
+    popupModal: {
+      // displays globally
       isVisible: boolean
-    },
-    passwordReminderModal: { // displays globally
+    }
+    passwordReminderModal: {
+      // displays globally
       isVisible: boolean
-    },
-  },
+    }
+  }
   walletList: {
-    deleteWalletModal: { // displays only on this scene
-      isVisible: boolean,
+    deleteWalletModal: {
+      // displays only on this scene
+      isVisible: boolean
       walletId: WalletId
-    },
-    privateSeedModal: { // displays only on this scene
-      isVisible: boolean,
+    }
+    privateSeedModal: {
+      // displays only on this scene
+      isVisible: boolean
       walletId: WalletId
-    },
-    renameWalletModal: { // displays only on this scene
-      isVisible: boolean,
+    }
+    renameWalletModal: {
+      // displays only on this scene
+      isVisible: boolean
       walletId: WalletId
-    },
-    resyncWalletModal: { // displays only on this scene
-      isVisible: boolean,
+    }
+    resyncWalletModal: {
+      // displays only on this scene
+      isVisible: boolean
       walletId: WalletId
-    },
+    }
   }
 }
 ```
 
 ### <a name="device"></a>Device
+
 ```typescript
 export type DeviceState = {
   contacts: ContactsState,
@@ -307,54 +331,57 @@ export type SpecsState = {
 ```
 
 ### <a name="exchange"></a>Exchange
+
 ```typescript
 export type ExchangeInfo = {
-  walletId: Id,
-  currencyCode: CurrencyCode,
+  walletId: Id
+  currencyCode: CurrencyCode
   amount: GuiAmount
 }
 
 export type ExchangeState = {
-  source: ExchangeInfo | null,
-  destination: ExchangeInfo | null,
+  source: ExchangeInfo | null
+  destination: ExchangeInfo | null
   transaction: EdgeTransaction | null
   error: Error | null
 }
 ```
 
 ### <a name="send"></a>Send
+
 ```typescript
 export type SendInfo = {
-  walletId: Id, // possibly keto-derived
-  currencyCode: CurrencyCode, // possibly keto-derived
+  walletId: Id // possibly keto-derived
+  currencyCode: CurrencyCode // possibly keto-derived
   amount: GuiAmount
 }
 
 export type SendState = {
-  uri: EdgeParsedUri | null,
-  spendInfo: EdgeSpendInfo | null, // keto-derived
-  source: SendInfo,
+  uri: EdgeParsedUri | null
+  spendInfo: EdgeSpendInfo | null // keto-derived
+  source: SendInfo
   destination: {
     address: string
-  },
-  feeSettings: FeesSettings | null,
-  transaction: EdgeTransaction | null,
-  metadata: EdgeMetadata | null,
+  }
+  feeSettings: FeesSettings | null
+  transaction: EdgeTransaction | null
+  metadata: EdgeMetadata | null
   error: Error | null
 }
 ```
 
 ### <a name="request"></a>Request
+
 ```typescript
 export type RequestInfo = {
-  walletId: Id, // possibly keto-derived
-  currencyCode: CurrencyCode, // possibly keto-derived
+  walletId: Id // possibly keto-derived
+  currencyCode: CurrencyCode // possibly keto-derived
   amount: GuiAmount
 }
 
 export type RequestState = {
-  destination: RequestInfo,
-  amountCurrent: GuiAmount,
+  destination: RequestInfo
+  amountCurrent: GuiAmount
   amountRemaining: GuiAmount // keto-derived
 }
 ```
