@@ -19,7 +19,7 @@
 16. [Request](#request)
 
 ### <a name="helper-types"></a>Helper Types
-```javascript
+```typescript
 type WalletId = string
 type CurrencyCode = string
 type IsoCurrencyCode = string
@@ -40,7 +40,7 @@ type SceneState = Object
 ```
 
 ### <a name="root-state"></a>Root State
-```javascript
+```typescript
 export type State = {
   edge: EdgeState, // everything non-serializable
   account: AccountState,
@@ -55,7 +55,7 @@ export type State = {
 ```
 
 ### <a name="edge"></a>Edge
-```javascript
+```typescript
 export type EdgeState = { // everything non-serializable
   account: EdgeAccount | null,
   context: EdgeContext | null,
@@ -64,7 +64,7 @@ export type EdgeState = { // everything non-serializable
 ```
 
 ### <a name="account"></a>Account
-```javascript
+```typescript
 export type LoginTypeState = ‘newAccount’
 | ‘password’
 | ‘pin’
@@ -80,7 +80,7 @@ export type AccountState = {
 ```
 
 ### <a name="password-reminder"></a>Password Reminder
-```javascript
+```typescript
 export type PasswordReminderState = {
   needsPasswordCheck: boolean,
   lastPasswordUse: Date,
@@ -92,7 +92,7 @@ export type PasswordReminderState = {
 ```
 
 ### <a name="wallet-settings"></a>Wallet Settings
-```javascript
+```typescript
 export type WalletSettingsState = {
   [WalletId]: {
     privacyMode: { // used to show or hide wallet balance in fiat
@@ -103,7 +103,7 @@ export type WalletSettingsState = {
 ```
 
 ### <a name="currency-settings"></a>Currency Settings
-```javascript
+```typescript
 export type CurrencySettingsState = {
   [CurrencyCode]: {
     denominations: {[key: string]: EdgeDenomination},
@@ -125,7 +125,7 @@ export type CurrencySettingsState = {
 ```
 
 ### <a name="local-settings"></a>Local Settings
-```javascript
+```typescript
 export type LocalSettingsState = {
   bluetoothMode: {
     isEnabled: boolean,
@@ -145,7 +145,7 @@ export type LocalSettingsState = {
 ```
 
 ### <a name="synced-settings"></a>Synced Settings
-```javascript
+```typescript
 export type SyncedSettingsState = {
   autoLogoutMode: {
     isEnabled: boolean,
@@ -164,7 +164,7 @@ export type SyncedSettingsState = {
 ```
 
 ### <a name="settings"></a>Settings
-```javascript
+```typescript
 export type SettingsState = {
   autoLogoutMode: SyncedSettingsState.autoLogoutMode, // keto-derived
   bluetoothMode: LocalSettings.bluetoothMode, // keto-derived
@@ -181,7 +181,7 @@ export type SettingsState = {
 ```
 
 ### <a name="wallets"></a>Wallets
-```javascript
+```typescript
 export type WalletsState = {
   byId: {[WalletId]: GuiWallet},
   activeWalletIds: Array<WalletId>,
@@ -193,7 +193,7 @@ export type WalletsState = {
 ```
 
 ### <a name="scenes"></a>Scenes
-```javascript
+```typescript
 export type ScenesState = { // INCOMPLETE, JUST AN EXAMPLE
   [SceneKey]: SceneState,
   main: {
@@ -229,7 +229,7 @@ export type ScenesState = { // INCOMPLETE, JUST AN EXAMPLE
 ```
 
 ### <a name="device"></a>Device
-```javascript
+```typescript
 export type DeviceState = {
   contacts: ContactsState,
   locale: LocaleState,
@@ -311,7 +311,7 @@ export type SpecsState = {
 ```
 
 ### <a name="exchange"></a>Exchange
-```javascript
+```typescript
 export type ExchangeInfo = {
   walletId: Id,
   currencyCode: CurrencyCode,
@@ -327,7 +327,7 @@ export type ExchangeState = {
 ```
 
 ### <a name="send"></a>Send
-```javascript
+```typescript
 export type SendInfo = {
   walletId: Id, // possibly keto-derived
   currencyCode: CurrencyCode, // possibly keto-derived
@@ -349,7 +349,7 @@ export type SendState = {
 ```
 
 ### <a name="request"></a>Request
-```javascript
+```typescript
 export type RequestInfo = {
   walletId: Id, // possibly keto-derived
   currencyCode: CurrencyCode, // possibly keto-derived
