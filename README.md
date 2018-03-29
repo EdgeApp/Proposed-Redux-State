@@ -5,18 +5,17 @@
 2. [Root State](#root-state)
 3. [Edge](#edge)
 4. [Account](#account)
-5. [Password Reminder](#password-reminder)
-6. [Wallet Settings](#wallet-settings)
-7. [Currency Settings](#currency-settings)
-8. [Local Settings](#local-settings)
-9. [Synced Settings](#synced-settings)
-10. [Settings](#settings)
-11. [Wallets](#wallets)
-12. [Scenes](#scenes)
-13. [Device](#device)
-14. [Exchange](#exchange)
-15. [Send](#send)
-16. [Request](#request)
+5. [Wallet Settings](#wallet-settings)
+6. [Currency Settings](#currency-settings)
+7. [Local Settings](#local-settings)
+8. [Synced Settings](#synced-settings)
+9. [Settings](#settings)
+10. [Wallets](#wallets)
+11. [Scenes](#scenes)
+12. [Device](#device)
+13. [Exchange](#exchange)
+14. [Send](#send)
+15. [Request](#request)
 
 ### <a name="helper-types"></a>Helper Types
 ```typescript
@@ -66,24 +65,21 @@ export type EdgeState = { // everything non-serializable
 ### <a name="account"></a>Account
 ```typescript
 export type LoginTypeState = ‘newAccount’
-| ‘password’
-| ‘pin’
-| ‘recovery’
-| ‘key’,
-| ‘edge’,
+  | ‘password’
+  | ‘pin’
+  | ‘recovery’
+  | ‘key’,
+  | ‘edge’,
 
 export type AccountState = {
   username: string, // keto-derived from state.edge.account.username
-  loginType: LoginTypeState,pass // keto-derived from state.edge.account
+  loginType: LoginTypeState, // keto-derived from state.edge.account
   passwordReminder: PasswordReminderState
 }
-```
 
-### <a name="password-reminder"></a>Password Reminder
-```typescript
 export type PasswordReminderState = {
   needsPasswordCheck: boolean,
-  lastPasswordUse: Date,
+  lastPasswordUse: number,
   nonPasswordDaysRemaining: number,
   nonPasswordLoginsRemaining: number,
   nonPasswordDaysLimit: number,
