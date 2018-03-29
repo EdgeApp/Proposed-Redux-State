@@ -1,24 +1,24 @@
 # Proposed Redux State
 
 ## Table of Contents
-1. [Helper Types](#Helper Types)
-2. [Root State](#Root State)
-3. [Edge](#Edge)
-4. [Account](#Account)
-5. [Password Reminder](#Password Reminder)
-6. [Wallet Settings](#Wallet Settings)
-7. [Currency Settings](#Currency Settings)
-8. [Local Settings](#Local Settings)
-9. [Synced Settings](#Synced Settings)
-10. [Settings](#Settings)
-11. [Wallets](#Wallets)
-12. [Scenes](#Scenes)
-13. [Device](#Device)
-14. [Exchange](#Exchange)
-15. [Send](#Send)
+1. [Helper Types](#helper-types)
+2. [Root State](#root-state)
+3. [Edge](#edge)
+4. [Account](#account)
+5. [Password Reminder](#password-reminder)
+6. [Wallet Settings](#wallet-settings)
+7. [Currency Settings](#currency-settings)
+8. [Local Settings](#local-settings)
+9. [Synced Settings](#synced-settings)
+10. [Settings](#settings)
+11. [Wallets](#wallets)
+12. [Scenes](#scenes)
+13. [Device](#device)
+14. [Exchange](#exchange)
+15. [Send](#send)
 16. [Request](#request)
 
-### Helper Types
+### <a name="helper-types"></a>Helper Types
 ```javascript
 type WalletId = string
 type CurrencyCode = string
@@ -39,7 +39,7 @@ type SceneKey = string
 type SceneState = Object
 ```
 
-### Root State
+### <a name="root-state"></a>Root State
 ```javascript
 export type State = {
   edge: EdgeState, // everything non-serializable
@@ -54,7 +54,7 @@ export type State = {
 }
 ```
 
-### Edge
+### <a name="edge"></a>Edge
 ```javascript
 export type EdgeState = { // everything non-serializable
   account: EdgeAccount | null,
@@ -63,7 +63,7 @@ export type EdgeState = { // everything non-serializable
 }
 ```
 
-### Account
+### <a name="account"></a>Account
 ```javascript
 export type LoginTypeState = ‘newAccount’
 | ‘password’
@@ -79,7 +79,7 @@ export type AccountState = {
 }
 ```
 
-### Password Reminder
+### <a name="password-reminder"></a>Password Reminder
 ```javascript
 export type PasswordReminderState = {
   needsPasswordCheck: boolean,
@@ -91,7 +91,7 @@ export type PasswordReminderState = {
 }
 ```
 
-### Wallet Settings
+### <a name="wallet-settings"></a>Wallet Settings
 ```javascript
 export type WalletSettingsState = {
   [WalletId]: {
@@ -102,7 +102,7 @@ export type WalletSettingsState = {
 }
 ```
 
-### Currency Settings
+### <a name="currency-settings"></a>Currency Settings
 ```javascript
 export type CurrencySettingsState = {
   [CurrencyCode]: {
@@ -124,7 +124,7 @@ export type CurrencySettingsState = {
 }
 ```
 
-### Local Settings
+### <a name="local-settings"></a>Local Settings
 ```javascript
 export type LocalSettingsState = {
   bluetoothMode: {
@@ -144,7 +144,7 @@ export type LocalSettingsState = {
 }
 ```
 
-### Synced Settings
+### <a name="synced-settings"></a>Synced Settings
 ```javascript
 export type SyncedSettingsState = {
   autoLogoutMode: {
@@ -163,7 +163,7 @@ export type SyncedSettingsState = {
 }
 ```
 
-### Settings
+### <a name="settings"></a>Settings
 ```javascript
 export type SettingsState = {
   autoLogoutMode: SyncedSettingsState.autoLogoutMode, // keto-derived
@@ -180,7 +180,7 @@ export type SettingsState = {
 }
 ```
 
-### Wallets
+### <a name="wallets"></a>Wallets
 ```javascript
 export type WalletsState = {
   byId: {[WalletId]: GuiWallet},
@@ -192,7 +192,7 @@ export type WalletsState = {
 }
 ```
 
-### Scenes
+### <a name="scenes"></a>Scenes
 ```javascript
 export type ScenesState = { // INCOMPLETE, JUST AN EXAMPLE
   [SceneKey]: SceneState,
@@ -228,7 +228,7 @@ export type ScenesState = { // INCOMPLETE, JUST AN EXAMPLE
 }
 ```
 
-### Device
+### <a name="device"></a>Device
 ```javascript
 export type DeviceState = {
   contacts: ContactsState,
@@ -310,7 +310,7 @@ export type SpecsState = {
 } | null
 ```
 
-### Exchange
+### <a name="exchange"></a>Exchange
 ```javascript
 export type ExchangeInfo = {
   walletId: Id,
@@ -326,7 +326,7 @@ export type ExchangeState = {
 }
 ```
 
-### Send
+### <a name="send"></a>Send
 ```javascript
 export type SendInfo = {
   walletId: Id, // possibly keto-derived
