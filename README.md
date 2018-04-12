@@ -15,8 +15,10 @@
 11. [Scenes](#scenes)
 12. [Device](#device)
 13. [Exchange](#exchange)
-14. [Send](#send)
-15. [Request](#request)
+14. [Scan](#scan)
+15. [Send](#send)
+16. [Request](#request)
+16. [Errors](#errors)
 
 ### <a name="helper-types"></a>Helper Types
 
@@ -51,8 +53,10 @@ export type State = {
   scenes: ScenesState,
   device: DeviceState,
   exchange: ExchangeState,
+  scan: ScanState,
   send: SendState,
-  request: RequestState
+  request: RequestState,
+  errors: ErrorsState,
 }
 ```
 
@@ -350,6 +354,15 @@ export type ExchangeState = {
 }
 ```
 
+### <a name="scan"></a>Scan
+```typescript
+export type ScanState = {
+  uri: EdgeParsedUri | null,
+  data: string | null,
+  error: Error | null
+}
+```
+
 ### <a name="send"></a>Send
 
 ```typescript
@@ -386,5 +399,19 @@ export type RequestState = {
   destination: RequestInfo,
   amountCurrent: GuiAmount,
   amountRemaining: GuiAmount // keto-derived
+}
+```
+
+### <a name="errors"></a>Errors
+
+```typescript
+export type ErrorsState = {
+  all: Array<Error>,
+  bySeverity: {
+    critical: Array<Error>,
+    high: Array<Error>,
+    medium: Array<Error>,
+    low: Array<Error>
+  }
 }
 ```
