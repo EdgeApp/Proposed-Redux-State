@@ -213,6 +213,9 @@ export type ScenesState = {
   // INCOMPLETE, JUST AN EXAMPLE
   [SceneKey]: SceneState,
   main: {
+    errorAlert: {
+      isVisible: boolean // keto-derived?
+    },
     dropdownAlert: {
       // displays globally
       isVisible: boolean
