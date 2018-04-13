@@ -251,6 +251,10 @@ export type ScenesState = {
       walletId: WalletId
     }
   }
+  exchange: ExchangeState,
+  request: RequestState,
+  Scan: ScanState,
+  Send: SendState
 }
 ```
 
@@ -276,7 +280,11 @@ export type ExchangeState = {
 export type ScanState = {
   uri: EdgeParsedUri | null,
   data: string | null,
-  error: Error | null
+  error: Error | null,
+  legacyAddressModal: {
+    isVisible: boolean,
+    currencyName: string
+  }
 }
 ```
 
