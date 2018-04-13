@@ -13,12 +13,12 @@
 9.  [Settings](#settings)
 10. [Wallets](#wallets)
 11. [Scenes](#scenes)
-12. [Device](#device)
-13. [Exchange](#exchange)
-14. [Scan](#scan)
-15. [Send](#send)
-16. [Request](#request)
-16. [Errors](#errors)
+12. [Exchange](#exchange)
+13. [Scan](#scan)
+14. [Send](#send)
+15. [Request](#request)
+16. [Device](#device)
+17. [Errors](#errors)
 
 ### <a name="helper-types"></a>Helper Types
 
@@ -254,6 +254,71 @@ export type ScenesState = {
 }
 ```
 
+### <a name="exchange"></a>Exchange
+
+```typescript
+export type ExchangeInfo = {
+  walletId: Id,
+  currencyCode: CurrencyCode,
+  amount: GuiAmount
+}
+
+export type ExchangeState = {
+  source: ExchangeInfo | null,
+  destination: ExchangeInfo | null,
+  transaction: EdgeTransaction | null,
+  error: Error | null
+}
+```
+
+### <a name="scan"></a>Scan
+```typescript
+export type ScanState = {
+  uri: EdgeParsedUri | null,
+  data: string | null,
+  error: Error | null
+}
+```
+
+### <a name="send"></a>Send
+
+```typescript
+export type SendInfo = {
+  walletId: Id, // possibly keto-derived
+  currencyCode: CurrencyCode, // possibly keto-derived
+  amount: GuiAmount
+}
+
+export type SendState = {
+  uri: EdgeParsedUri | null,
+  spendInfo: EdgeSpendInfo | null, // keto-derived
+  source: SendInfo,
+  destination: {
+    address: string
+  },
+  feeSettings: FeesSettings | null,
+  transaction: EdgeTransaction | null,
+  metadata: EdgeMetadata | null,
+  error: Error | null
+}
+```
+
+### <a name="request"></a>Request
+
+```typescript
+export type RequestInfo = {
+  walletId: Id, // possibly keto-derived
+  currencyCode: CurrencyCode, // possibly keto-derived
+  amount: GuiAmount
+}
+
+export type RequestState = {
+  destination: RequestInfo,
+  amountCurrent: GuiAmount,
+  amountRemaining: GuiAmount // keto-derived
+}
+```
+
 ### <a name="device"></a>Device
 
 ```typescript
@@ -338,71 +403,6 @@ export type SpecsState = {
   isPinOrFingerprintSet: boolean,
   isTablet: boolean
 } | null
-```
-
-### <a name="exchange"></a>Exchange
-
-```typescript
-export type ExchangeInfo = {
-  walletId: Id,
-  currencyCode: CurrencyCode,
-  amount: GuiAmount
-}
-
-export type ExchangeState = {
-  source: ExchangeInfo | null,
-  destination: ExchangeInfo | null,
-  transaction: EdgeTransaction | null,
-  error: Error | null
-}
-```
-
-### <a name="scan"></a>Scan
-```typescript
-export type ScanState = {
-  uri: EdgeParsedUri | null,
-  data: string | null,
-  error: Error | null
-}
-```
-
-### <a name="send"></a>Send
-
-```typescript
-export type SendInfo = {
-  walletId: Id, // possibly keto-derived
-  currencyCode: CurrencyCode, // possibly keto-derived
-  amount: GuiAmount
-}
-
-export type SendState = {
-  uri: EdgeParsedUri | null,
-  spendInfo: EdgeSpendInfo | null, // keto-derived
-  source: SendInfo,
-  destination: {
-    address: string
-  },
-  feeSettings: FeesSettings | null,
-  transaction: EdgeTransaction | null,
-  metadata: EdgeMetadata | null,
-  error: Error | null
-}
-```
-
-### <a name="request"></a>Request
-
-```typescript
-export type RequestInfo = {
-  walletId: Id, // possibly keto-derived
-  currencyCode: CurrencyCode, // possibly keto-derived
-  amount: GuiAmount
-}
-
-export type RequestState = {
-  destination: RequestInfo,
-  amountCurrent: GuiAmount,
-  amountRemaining: GuiAmount // keto-derived
-}
 ```
 
 ### <a name="errors"></a>Errors
