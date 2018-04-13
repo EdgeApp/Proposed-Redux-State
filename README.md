@@ -52,10 +52,6 @@ export type State = {
   settings: SettingsState,
   scenes: ScenesState,
   device: DeviceState,
-  exchange: ExchangeState,
-  scan: ScanState,
-  send: SendState,
-  request: RequestState,
   errors: ErrorsState,
 }
 ```
