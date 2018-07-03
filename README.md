@@ -6,19 +6,20 @@
 2.  [Root State](#root-state)
 3.  [Edge](#edge)
 4.  [Account](#account)
-5.  [Wallet Settings](#wallet-settings)
-6.  [Currency Settings](#currency-settings)
-7.  [Local Settings](#local-settings)
-8.  [Synced Settings](#synced-settings)
-9.  [Settings](#settings)
-10. [Wallets](#wallets)
-11. [Scenes](#scenes)
-12. [Exchange](#exchange)
-13. [Scan](#scan)
-14. [Send](#send)
-15. [Request](#request)
-16. [Device](#device)
-17. [Errors](#errors)
+5.  [Account Settings](#account-settings)
+6.  [Wallet Settings](#wallet-settings)
+7.  [Currency Settings](#currency-settings)
+8.  [Local Settings](#local-settings)
+9.  [Synced Settings](#synced-settings)
+10. [Settings](#settings)
+11. [Wallets](#wallets)
+12. [Scenes](#scenes)
+13. [Exchange](#exchange)
+14. [Scan](#scan)
+15. [Send](#send)
+16. [Request](#request)
+17. [Device](#device)
+18. [Errors](#errors)
 
 ### <a name="helper-types"></a>Helper Types
 
@@ -70,7 +71,8 @@ export type EdgeState = {
 ### <a name="account"></a>Account
 
 ```typescript
-export type LoginTypeState = ‘newAccount’
+export type LoginTypeState = 
+  | ‘newAccount’
   | ‘password’
   | ‘pin’
   | ‘recovery’
@@ -96,7 +98,7 @@ export type PasswordReminderState = {
 ### <a name="wallet-settings"></a>Wallet Settings
 
 ```typescript
-export type WalletSettingsState = {
+export type LocalWalletSettingsState = {
   [WalletId]: {
     privacyMode: {
       // used to show or hide wallet balance in fiat
@@ -106,20 +108,36 @@ export type WalletSettingsState = {
 }
 ```
 
+```typescript
+export type SyncedWalletSettingsState = { [WalletId]: {} }
+```
+
+```typescript
+export type WalletSettingsState = LocalWalletSettingsState & SyncedWalletSettingsState
+```
+
 ### <a name="currency-settings"></a>Currency Settings
 
 ```typescript
-export type CurrencySettingsState = {
+export type LocalCurrencySettingsState = {
   [CurrencyCode]: {
     denominations: {[key: string]: EdgeDenomination}
-    displayDenominationKey: string, // overkill? confusing?
     displayDenomination: EdgeDenomination, // keto-derived
     exchangeDenomination: EdgeDenomination, // keto-derived
     spendingLimits: {
       daily: {
         isEnabled: boolean,
         nativeAmount: string
-      },
+      }
+    }
+  }
+}
+```
+
+```typescript
+export type SyncedCurrencySettingsState = {
+  [CurrencyCode]: {
+    spendingLimits: {
       transaction: {
         isEnabled: boolean,
         nativeAmount: string
@@ -127,6 +145,10 @@ export type CurrencySettingsState = {
     }
   }
 }
+```
+
+```typescript
+export type CurrencySettingsState = LocalCurrencySettingsState & SyncedCurrencySettingsState
 ```
 
 ### <a name="local-settings"></a>Local Settings
@@ -140,13 +162,15 @@ export type LocalSettingsState = {
   otpMode: {
     isEnabled: boolean,
     key: string,
-    resetDate: Date,
-    daysRemaining: Date
+    resetDate: number,
+    expireDate: number
   },
   touchId: {
     isEnabled: boolean,
     isSupported: boolean
-  }
+  },
+  byWalletId: LocalWalletSettingsState,
+  byCurrencyCode: LocalCurrencySettingsState
 }
 ```
 
@@ -162,12 +186,12 @@ export type SyncedSettingsState = {
   merchantMode: {
     isEnabled: boolean
   },
-  privacyMode: {
+  privacyModeAccount: {
     // used to show or hide total account balance in fiat
     isEnabled: boolean
   },
-  byWalletId: WalletSettingsState,
-  byCurrencyCode: CurrencySettingsState
+  byWalletId: SyncedWalletSettingsState,
+  byCurrencyCode: SyncedCurrencySettingsState
 }
 ```
 
@@ -333,15 +357,18 @@ export type DeviceState = {
   specs: SpecsState
 }
 
-export type PermissionState = ‘granted’
+export type PermissionState = 
+  | ‘granted’
   | ‘denied’
   | ‘restricted’
   | null
 
-export type Permission = ‘bluetooth’
+export type Permission = 
+  | ‘bluetooth’
   | ‘camera’
   | ‘contacts’
   | ‘photos’
+  | ‘bluetooth’
 
 export type PermissionsState = {
   [Permission]: PermissionState
